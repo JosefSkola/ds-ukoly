@@ -1,0 +1,56 @@
+openapi: 3.0.0
+info:
+  title: Key-value store
+  version: 0.0.1
+
+# Neobsahuje interní endpointy a parametry používané pro komunikaci mezi nody
+
+paths:
+  /kv/{key}:
+    get:
+      summary: "Load a value from the store for a given key"
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "OK"
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: "Key not found in store"
+    put:
+      summary: "Save a key-value pair into the store"
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          "*/*":
+            schema:
+              type: string
+              format: binary
+      responses:
+        "200":
+          description: "OK"
+    delete:
+      summary: "Remove a key-value pair from the store"
+      parameters:
+      - name: key
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "OK"
+
